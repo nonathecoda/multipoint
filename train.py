@@ -32,7 +32,8 @@ def main():
     # check training device
     device = torch.device("cpu")
     if config['training']['allow_gpu']:
-        device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+        device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
+        #device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
     print('Training on device: {}'.format(device))
 
     # dataset
@@ -62,8 +63,9 @@ def main():
         weights = utils.fix_model_weigth_keys(weights)
         net.load_state_dict(weights)
 
-    if config['training']['allow_gpu'] and (torch.cuda.device_count() > 1):
-        print("Using ", torch.cuda.device_count(), " GPUs to train the model")
+    if config['training']['allow_gpu'] and (torch.backends.mps.is_available()):
+    #if config['training']['allow_gpu'] and (torch.cuda.device_count() > 1):
+        #print("Using ", torch.cuda.device_count(), " GPUs to train the model")
         net = torch.nn.DataParallel(net)
 
     net.to(device)
