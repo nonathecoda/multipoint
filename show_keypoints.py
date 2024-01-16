@@ -1,3 +1,4 @@
+from icecream import ic
 import argparse
 import cv2
 import h5py
@@ -33,7 +34,7 @@ config = {
         },
     }
 }
-
+ic(args.keypoint_file)
 dataset = data.ImagePairDataset(config)
 try:
     keypoint_file = h5py.File(args.keypoint_file, 'r', swmr=True)

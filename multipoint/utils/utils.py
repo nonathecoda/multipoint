@@ -57,7 +57,7 @@ def parse_primitives(names, all_primitives):
 
 def generate_keypoint_map(keypoints, image_shape):    
     tmp = keypoints.astype(np.int64)
-    keypoint_map = np.zeros(image_shape, dtype=np.bool)
+    keypoint_map = np.zeros(image_shape, dtype=bool)
     keypoint_map[tmp[:,0],tmp[:,1]] = True
     return keypoint_map
 

@@ -1,11 +1,13 @@
 dataset:
     type: 'ImagePairDataset'
-    filename: data/training.hdf5
-    keypoints_filename: data/labels.hdf5
+    filename: /Users/antonia/dev/UNITN/remote_sensing_systems/multipoint/data/data_arss/training.hdf5
+    keypoints_filename: /Users/antonia/dev/UNITN/remote_sensing_systems/multipoint/data/data_arss/labels.hdf5
     single_image: false
     random_pairs: true
-    height: 240
-    width: 320
+    #height: 240
+    #width: 320
+    height: 232
+    width: 312
     augmentation:
         photometric:
             enable: true
@@ -64,9 +66,11 @@ loss:
     lambda: 1.0
 
 training:
-    n_epochs: 3000
+    #n_epochs: 3000
+    n_epochs: 3
     learningrate: 1e-4
-    batchsize: 32
+    #batchsize: 32
+    batchsize: 1
     num_worker: 4
     allow_gpu: true
     use_writer: true

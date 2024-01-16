@@ -1,6 +1,6 @@
 dataset:
     type: 'ImagePairDataset'
-    filename: data/test.hdf5
+    filename: /Users/antonia/dev/UNITN/remote_sensing_systems/arss_aerial_feature_matching/groundtruth_gui/data/training.hdf5
     single_image: False
     augmentation:
         photometric:
