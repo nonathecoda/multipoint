@@ -1,4 +1,4 @@
-opencv-python==4.2.0.34
+opencv-python
 h5py
 matplotlib
 numpy
@@ -8,3 +8,4 @@ pyyaml
 tqdm
 tensorboard
 requests
+kornia

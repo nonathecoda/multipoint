@@ -224,18 +224,18 @@ class ImagePairDataset(Dataset):
             valid_mask_thermal = np.expand_dims(valid_mask_thermal, 0)
 
             out['optical']['image'] = torch.from_numpy(optical.astype(np.float32))
-            out['optical']['valid_mask'] = torch.from_numpy(valid_mask_optical.astype(np.bool))
+            out['optical']['valid_mask'] = torch.from_numpy(valid_mask_optical.astype(bool))
             out['optical']['is_optical'] = torch.BoolTensor([optical_is_optical])
             if keypoints_optical is not None:
                 keypoints_optical = utils.generate_keypoint_map(keypoints_optical, (h,w))
-                out['optical']['keypoints'] = torch.from_numpy(keypoints_optical.astype(np.bool))
+                out['optical']['keypoints'] = torch.from_numpy(keypoints_optical.astype(bool))
 
             out['thermal']['image'] = torch.from_numpy(thermal.astype(np.float32))
-            out['thermal']['valid_mask'] = torch.from_numpy(valid_mask_thermal.astype(np.bool))
+            out['thermal']['valid_mask'] = torch.from_numpy(valid_mask_thermal.astype(bool))
             out['thermal']['is_optical'] = torch.BoolTensor([thermal_is_optical])
             if keypoints_optical is not None:
                 keypoints_thermal = utils.generate_keypoint_map(keypoints_thermal, (h,w))
-                out['thermal']['keypoints'] = torch.from_numpy(keypoints_thermal.astype(np.bool))
+                out['thermal']['keypoints'] = torch.from_numpy(keypoints_thermal.astype(bool))
 
         if self.config['return_name']:
             out['name'] = self.memberslist[index]

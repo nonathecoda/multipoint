@@ -2,12 +2,9 @@ import cv2
 from math import pi
 import numpy as np
 import torch
-try:
-    import kornia
-    from kornia.geometry.warp.homography_warper import homography_warp
-    kornia_available = True
-except:
-    kornia_available = False
+import kornia
+from kornia.geometry.transform.imgwarp import homography_warp
+kornia_available = True
 
 from .utils import dict_update, get_gaussian_filter
 
@@ -328,7 +325,7 @@ def sample_homography(image_shape, perspective=True, scaling=True, rotation=True
     homography = cv2.getPerspectiveTransform(pts1.astype(np.float32), pts2.astype(np.float32))
     return homography
 
-def warp_keypoints(keypoints, homography, return_type=np.int):
+def warp_keypoints(keypoints, homography, return_type=int):
     """
     Warp the keypoints based on the specified homographic transformation matrix
 
@@ -421,7 +418,8 @@ def warp_perspective_tensor(src, M, dsize, mode='bilinear', padding_mode='zeros'
         raise ValueError("Input M must be a Bx3x3 tensor. Got {}"
                          .format(src.shape))
     # launches the warper
-    M_norm = kornia.geometry.transform.imgwarp.dst_norm_to_dst_norm(M, (src.shape[-2:]), dsize)
+    #M_norm = kornia.geometry.transform.imgwarp.dst_norm_to_dst_norm(M, (src.shape[-2:]), dsize)
+    M_norm = kornia.geometry.conversions.normalize_homography(M, (src.shape[-2:]), dsize)
     return homography_warp(src, torch.inverse(M_norm), dsize, mode, padding_mode)
 
 class WarpingModule(nn.Module):

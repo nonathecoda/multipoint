@@ -9,6 +9,8 @@
 *lsf*
 *.txt
 data/*
+tmp/*
+venv_multipoint/*
 
 !requirements.txt
 !.gitignore
