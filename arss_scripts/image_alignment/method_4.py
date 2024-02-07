@@ -80,9 +80,8 @@ class ImageAligner():
                 thermal_raw_path = Path(self.__input_dir, index + '_thermal_raw.png')
 
                 # load the images
-                optical = cv2.imread(str(optical_path), -1)
-                thermal = cv2.imread(str(thermal_path), -1)
-                thermal_raw = cv2.imread(str(thermal_raw_path), -1)
+                optical = cv2.imread(str(optical_path), 0)
+                thermal = cv2.imread(str(thermal_path), 0)
 
                 #resize optical to thermal
                 optical = cv2.resize(optical, (thermal.shape[1], thermal.shape[0]))
@@ -96,7 +95,16 @@ class ImageAligner():
                     edges_thermal = cv2.Laplacian(thermal_blurr, -1, ksize=5, scale=1,delta=0,borderType=cv2.BORDER_DEFAULT)
                 
                 elif self.__params['CannyEdge']:
-                    ic("Canny Edge")
+                    
+                    edges_optical = cv2.Canny(optical, 20, 70)
+                    thermal_copy = (thermal).astype(np.uint8)
+                    edges_thermal = cv2.Canny(thermal_copy, 70, 200)
+                
+                #plot edges
+                plt.imshow((edges_thermal), cmap='gray')
+                plt.show()
+                exit()
+
 
                 t_init = np.array([[1., 0, 0],
                                 [0, 1.001, 0],
