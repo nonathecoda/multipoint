@@ -100,12 +100,6 @@ class ImageAligner():
                     thermal_copy = (thermal).astype(np.uint8)
                     edges_thermal = cv2.Canny(thermal_copy, 70, 200)
                 
-                #plot edges
-                plt.imshow((edges_thermal), cmap='gray')
-                plt.show()
-                exit()
-
-
                 t_init = np.array([[1., 0, 0],
                                 [0, 1.001, 0],
                                 [0, 0, 0.001]])
