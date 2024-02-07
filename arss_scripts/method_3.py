@@ -150,8 +150,6 @@ class ImageAligner():
                 
                 # update the progressbar
                 pbar.update(1)
-                
-        
 
 def main():
 
