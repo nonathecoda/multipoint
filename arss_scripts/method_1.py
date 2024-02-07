@@ -94,16 +94,7 @@ class ImageAligner():
                 (success, solver_fail, best_warped, transformation,
                         valid_warped) = self.align_images_mutual_information(optical, thermal, thermal_raw, t_init)
 
-                '''
-                f, axarr = plt.subplots(2,2, figsize=(15, 5))
-                axarr[0][0].imshow(optical, cmap='gray')
-                axarr[0][1].imshow(thermal, cmap='gray')
-                axarr[1][0].imshow(valid_warped, cmap='gray')
-                axarr[1][1].imshow(best_warped, cmap='gray')
-                plt.show()
-                exit()
-                '''
-                ic(success)
+
                 if success:
                     if self.__params['save_aligned_images']:
                         cv2.imwrite(str(Path(out_path_aligned, index + '_optical.png')),
