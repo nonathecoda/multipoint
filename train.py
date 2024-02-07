@@ -1,3 +1,4 @@
+from icecream import ic
 import argparse
 import copy
 import cv2
@@ -59,6 +60,7 @@ def main():
             start_epoch = int(os.path.split(args.weight_file)[-1].split('.')[0][1:])
         except ValueError:
             pass
+        ic(args.weight_file)
         weights = torch.load(args.weight_file, map_location=torch.device('cpu'))
         weights = utils.fix_model_weigth_keys(weights)
         net.load_state_dict(weights)
@@ -183,4 +185,14 @@ def update_loss_components(epoch_loss_components, loss_components):
     return epoch_loss_components
 
 if __name__ == "__main__":
+    user_input = input("Make sure you don't overwrite any model weights. (check): ")
+
+    # Check the user's response
+    if user_input.lower() == 'check':
+        print("Starting training...")
+        # Place your code here that you want to execute
+    else:
+        print("Execution cancelled.")
+        exit()
+        
     main()

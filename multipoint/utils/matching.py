@@ -1,3 +1,4 @@
+from icecream import ic
 import cv2
 import numpy as np
 
@@ -28,6 +29,7 @@ def get_matches(desc_1, desc_2, method = 'bfmatcher', knn_matches = False, **kwa
                 matches.append(m)
 
     else:
+        ic(desc_1.shape, desc_2.shape)
         matches = matcher.match(desc_1, desc_2)
 
     return matches

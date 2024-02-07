@@ -1,3 +1,4 @@
+from icecream import ic
 import argparse
 import h5py
 import os
@@ -33,7 +34,7 @@ def main():
     # check device
     device = torch.device("cpu")
     if config['prediction']['allow_gpu']:
-        device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
+        device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
     print('Predicting on device: {}'.format(device))
 
     # dataset
@@ -49,10 +50,10 @@ def main():
         net.load_state_dict(weights)
 
     # multi gpu prediction
-    if torch.cuda.device_count() > 1:
-        net = torch.nn.DataParallel(net)
+    #if torch.cuda.device_count() > 1:
+    #    net = torch.nn.DataParallel(net)
 
-    print("Using", torch.cuda.device_count(), "GPUs for prediction")
+    #print("Using", torch.cuda.device_count(), "GPUs for prediction")
 
     # move net to the right device
     net.to(device)

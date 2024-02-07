@@ -70,6 +70,6 @@ mask_optical = np.repeat(np.expand_dims(sample['optical']['valid_mask'].squeeze(
 mask_thermal = np.repeat(np.expand_dims(sample['thermal']['valid_mask'].squeeze().numpy(), axis=2), 3, axis=2)
 cv2.imshow('thermal', out_thermal)
 cv2.imshow('optical', out_optical)
-cv2.imshow('thermal masked', out_thermal * mask_thermal)
-cv2.imshow('optical masked', out_optical * mask_optical)
+#cv2.imshow('thermal masked', out_thermal * mask_thermal)
+#cv2.imshow('optical masked', out_optical * mask_optical)
 cv2.waitKey(0)

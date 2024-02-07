@@ -7,7 +7,7 @@ import multipoint.datasets as data
 
 def main():
     parser = argparse.ArgumentParser(description='Show a sample of the dataset')
-    parser.add_argument('-i', '--input-file', default='/tmp/test.hdf5', help='Input dataset file')
+    parser.add_argument('-i', '--input-file', default='/Users/antonia/dev/UNITN/remote_sensing_systems/arss_aerial_feature_matching/groundtruth_gui/data/training.hdf5', help='Input dataset file')
     parser.add_argument('-k', '--keypoint-file', help='Keypoint dataset file')
     parser.add_argument('-n', dest='sample_number', type=int, default=0, help='Sample to show')
     parser.add_argument('-r', '--radius', default=4, type=int, help='Radius of the keypoint circle')

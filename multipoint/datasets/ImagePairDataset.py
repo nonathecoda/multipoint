@@ -164,11 +164,11 @@ class ImagePairDataset(Dataset):
 
             # add to output dict
             out['image'] = torch.from_numpy(image.astype(np.float32))
-            out['valid_mask'] = torch.from_numpy(valid_mask.astype(np.bool))
+            out['valid_mask'] = torch.from_numpy(valid_mask.astype(bool))
             out['is_optical'] = torch.BoolTensor([is_optical])
             if keypoints is not None:
                 keypoints = utils.generate_keypoint_map(keypoints, (h,w))
-                out['keypoints'] = torch.from_numpy(keypoints.astype(np.bool))
+                out['keypoints'] = torch.from_numpy(keypoints.astype(bool))
 
         else:
             # initialize the images

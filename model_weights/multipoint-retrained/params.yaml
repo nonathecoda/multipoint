@@ -49,13 +49,13 @@ dataset:
       - additive_gaussian_noise
       - additive_shade
       - motion_blur
-  filename: /Users/antonia/dev/UNITN/remote_sensing_systems/multipoint/data/data_arss/training.hdf5
-  height: 232
-  keypoints_filename: /Users/antonia/dev/UNITN/remote_sensing_systems/multipoint/data/data_arss/labels.hdf5
+  filename: data/data_multipoint/training.hdf5
+  height: 240
+  keypoints_filename: data/data_multipoint/labels_training.hdf5
   random_pairs: true
   single_image: false
   type: ImagePairDataset
-  width: 312
+  width: 320
 loss:
   descriptor_loss: true
   descriptor_loss_threshold: 4.0
@@ -75,15 +75,15 @@ model:
   descriptor_size: 64
   final_batchnorm: true
   intepolation_mode: bilinear
-  multispectral: false
+  multispectral: true
   normalize_descriptors: true
   reflection_pad: true
   type: MultiPoint
 training:
   allow_gpu: true
-  batchsize: 1
+  batchsize: 32
   learningrate: 1e-4
-  n_epochs: 3
+  n_epochs: 3000
   num_worker: 4
   output_directory: model_weights/multipoint-retrained
   save_every_n_epoch: 5

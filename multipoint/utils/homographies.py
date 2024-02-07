@@ -1,3 +1,4 @@
+from icecream import ic
 import cv2
 from math import pi
 import numpy as np
@@ -247,7 +248,7 @@ def sample_homography(image_shape, perspective=True, scaling=True, rotation=True
             for i in range(n_scales):
                 if scaled[i,...].max() < 1.0 and scaled[i,...].min() >= 0.0:
                     valid.append(i)
-
+        ic(valid)
         if valid is not None:
             idx = np.random.choice(valid)
             points = scaled[idx]

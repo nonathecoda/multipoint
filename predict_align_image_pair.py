@@ -1,3 +1,4 @@
+from icecream import ic
 import argparse
 import cv2
 import matplotlib.pyplot as plt
@@ -122,6 +123,7 @@ def main():
         out_thermal = net(data['thermal']) # could be optimized to move into one forward pass
         synchronize()
         t_2 = time.time()
+        
 
         # compute the nms probablity
         if config['prediction']['nms'] > 0:
@@ -172,6 +174,7 @@ def main():
                 kp_optical = [cv2.KeyPoint(c[1], c[0], args.radius) for c in pred_optical.cpu().numpy().astype(np.float32)]
                 kp_thermal = [cv2.KeyPoint(c[1], c[0], args.radius) for c in pred_thermal.cpu().numpy().astype(np.float32)]
 
+
                 # get the descriptors
                 if desc_optical.shape[1:] == prob_optical.shape[1:]:
                     # classic descriptors, directly take values
@@ -196,9 +199,7 @@ def main():
                 # convert images to numpy arrays
                 im_optical = cv2.cvtColor((np.clip(optical.squeeze().cpu().numpy(), 0.0, 1.0) * 255.0).astype(np.uint8),cv2.COLOR_GRAY2RGB)
                 im_thermal = cv2.cvtColor((np.clip(thermal.squeeze().cpu().numpy(), 0.0, 1.0) * 255.0).astype(np.uint8),cv2.COLOR_GRAY2RGB)
-
-
-
+                
                 # draw the matches
                 out_image = cv2.drawMatches(im_optical, kp_optical, im_thermal, kp_thermal, matches, None, flags=2)
                 cv2.namedWindow('matches', cv2.WINDOW_NORMAL)
@@ -228,7 +229,7 @@ def main():
                 matchesMask = (diff < 4.0).tolist()
 
                 # draw refined matches
-                out_image_refined = cv2.drawMatches(im_optical,
+                '''out_image_refined = cv2.drawMatches(im_optical,
                                                     kp_optical,
                                                     im_thermal,
                                                     kp_thermal,
@@ -238,6 +239,15 @@ def main():
                                                     singlePointColor=(0, 0, 255),
                                                     flags=0,
                                                     matchesMask = matchesMask)
+                                                    '''
+                out_image_refined = cv2.drawMatches(im_optical,
+                                                    kp_optical,
+                                                    im_thermal,
+                                                    kp_thermal,
+                                                    matches, 
+                                                    None,
+                                                    flags=cv2.DrawMatchesFlags_NOT_DRAW_SINGLE_POINTS)
+
 
                 cv2.namedWindow('matches_refined', cv2.WINDOW_NORMAL)
                 cv2.resizeWindow('matches_refined', (out_image_refined.shape[1]*2, out_image_refined.shape[0]*2 + 50))
