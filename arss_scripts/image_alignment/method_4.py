@@ -87,19 +87,48 @@ class ImageAligner():
                 optical = cv2.resize(optical, (thermal.shape[1], thermal.shape[0]))
 
                 if self.__params['LaPlacian']:
-                    #apply gaussian Blur to remove the Gaussian Noise from the image
+                    #apply gaussian Blur to remove the Gaussian noise from the image
                     optical_blurr = cv2.GaussianBlur(optical,(5,5),0)
                     edges_optical = cv2.Laplacian(optical_blurr, -1, ksize=5, scale=1,delta=0,borderType=cv2.BORDER_DEFAULT)
 
                     thermal_blurr = cv2.GaussianBlur(thermal,(7,7),0)
                     edges_thermal = cv2.Laplacian(thermal_blurr, -1, ksize=5, scale=1,delta=0,borderType=cv2.BORDER_DEFAULT)
                 
-                elif self.__params['CannyEdge']:
-                    
+                laplacian_opt = edges_optical
+                laplacian_therm = edges_thermal
+
+                if self.__params['CannyEdge']:
                     edges_optical = cv2.Canny(optical, 20, 70)
                     thermal_copy = (thermal).astype(np.uint8)
                     edges_thermal = cv2.Canny(thermal_copy, 70, 200)
-                
+            
+                canny_opt = edges_optical
+                canny_therm = edges_thermal
+
+                #visualize the images with plt
+                fig, axs = plt.subplots(2, 3, figsize=(5, 5))
+                axs[0, 0].imshow(laplacian_opt, cmap='gray')
+                axs[0, 0].set_title('Optical Edges (Laplacian)')
+                axs[0, 1].imshow(canny_opt, cmap='gray')
+                axs[0, 1].set_title('Optical Edges (Canny)')
+                axs[0, 2].imshow(optical, cmap='gray')
+                axs[0, 2].set_title('Optical')
+                axs[1, 0].imshow(laplacian_therm, cmap='gray')
+                axs[1, 0].set_title('Thermal Edges (Laplacian)')
+                axs[1, 1].imshow(canny_therm, cmap='gray')
+                axs[1, 1].set_title('Thermal Edges (Canny)')
+                axs[1, 2].imshow(thermal, cmap='gray')
+                axs[1, 2].set_title('Thermal')
+                axs[0, 0].axis('off')
+                axs[0, 1].axis('off')
+                axs[0, 2].axis('off')
+                axs[1, 0].axis('off')
+                axs[1, 1].axis('off')
+                axs[1, 2].axis('off')
+
+                plt.show()
+
+                exit()
                 t_init = np.array([[1., 0, 0],
                                 [0, 1.001, 0],
                                 [0, 0, 0.001]])
@@ -107,22 +136,7 @@ class ImageAligner():
                 (success, solver_fail, best_warped, transformation,
                         valid_warped) = self.align_images_mutual_information(edges_optical, edges_thermal, t_init)
                 
-                ic(success)
-                ic(transformation)
-                
-
-                #transformation = np.eye(3)
                 best_warped = cv2.warpPerspective(optical, transformation, (optical.shape[1], optical.shape[0]))
-
-                '''
-                #visualize in plt
-                fig, ax = plt.subplots(1, 2, figsize=(12, 6))
-                ax[0].imshow(thermal, cmap='gray')
-                ax[0].set_title('optical')
-                ax[1].imshow(best_warped, cmap='gray')
-                ax[1].set_title('best_warped')
-                plt.show()
-                '''
 
                 if success:
                     if self.__params['save_aligned_images']:

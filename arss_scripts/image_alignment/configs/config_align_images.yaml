@@ -8,7 +8,7 @@ save_aligned_images : true
 use_image_pyramid : false
 use_smoothing_stage : false
 perspective : true # affine transform not really tested anymore
-LaPlacian: false
+LaPlacian: true
 CannyEdge: true #choose either LaPlacian or CannyEdge
 
 # ------------------------------------------------------------------
