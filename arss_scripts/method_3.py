@@ -12,26 +12,6 @@ import torch
 import matplotlib.pyplot as plt
 import os
 
-
-def distance(p1, p2):
-    """Calculate the Euclidean distance between two points."""
-    return np.sqrt((p1[0] - p2[0])**2 + (p1[1] - p2[1])**2)
-
-def furthest_points(points, n=4):
-    """Select N points that are the furthest from each other."""
-    if len(points) <= n:
-        return points
-
-    # Start with the point with the maximum x-coordinate
-    selected_points = [max(points, key=lambda point: point[0])]
-    
-    # Iteratively add the furthest point from the current selection
-    while len(selected_points) < n:
-        furthest_point = max(points, key=lambda point: min([distance(point, selected) for selected in selected_points]))
-        selected_points.append(furthest_point)
-
-    return selected_points
-
 class ImageAligner():
     '''
     Class to iterate over a image pairs and align them using mutual information.
@@ -113,7 +93,7 @@ class ImageAligner():
                 mkpts_thermal = np.asarray(mkpts_thermal_inlier)
 
                 # Select the 4 points that are the furthest from each other
-                selected_points = furthest_points(mkpts_optical)
+                selected_points = self.furthest_points(mkpts_optical)
 
                 # find and store index of selected points
                 chosen_values = []
@@ -150,6 +130,25 @@ class ImageAligner():
                 
                 # update the progressbar
                 pbar.update(1)
+
+    def distance(self, p1, p2):
+        """Calculate the Euclidean distance between two points."""
+        return np.sqrt((p1[0] - p2[0])**2 + (p1[1] - p2[1])**2)
+
+    def furthest_points(self, points, n=4):
+        """Select N points that are the furthest from each other."""
+        if len(points) <= n:
+            return points
+
+        # Start with the point with the maximum x-coordinate
+        selected_points = [max(points, key=lambda point: point[0])]
+        
+        # Iteratively add the furthest point from the current selection
+        while len(selected_points) < n:
+            furthest_point = max(points, key=lambda point: min([self.distance(point, selected) for selected in selected_points]))
+            selected_points.append(furthest_point)
+
+        return selected_points
 
 def main():
 
