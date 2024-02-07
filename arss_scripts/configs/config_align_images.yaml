@@ -3,7 +3,7 @@
 # ------------------------------------------------------------------
 alignment_method : mi
 verbose : false
-show_results : false
+show_results : true
 save_aligned_images : true
 use_image_pyramid : false
 use_smoothing_stage : false

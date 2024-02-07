@@ -1,3 +1,4 @@
+from icecream import ic
 import cv2
 import math
 import multiprocessing
@@ -33,12 +34,14 @@ def warp_image(image, transform, height, width):
         Warped image, of specified size (height, width)
     '''
     if transform.shape == (3,3):
+        #ic("warp perspective")
         warped = cv2.warpPerspective(image,
                                      np.linalg.inv(transform),
                                      (width, height),
                                      borderValue = -1.0)
 
     elif transform.shape == (2,3):
+        #ic("warp affine")
         transform_inv = cv2.invertAffineTransform(transform)
         warped = cv2.warpAffine(image,
                                 transform_inv,

@@ -17,6 +17,7 @@ from helper_functions.disp import *
 from helper_functions.utils import *
 
 # adapted from https://github.com/ethz-asl/multipoint
+# finds homography between two images
 
 class ImageAligner():
     '''
@@ -87,7 +88,8 @@ class ImageAligner():
                 optical = cv2.resize(optical, (thermal.shape[1], thermal.shape[0]))
 
                 t_init = np.array([[1., 0, 0],
-                                [0, 1.001, 0]])
+                                [0, 1.001, 0],
+                                [0, 0, 0.001]])
                 
                 (success, solver_fail, best_warped, transformation,
                         valid_warped) = self.align_images_mutual_information(optical, thermal, thermal_raw, t_init)
@@ -138,7 +140,7 @@ class ImageAligner():
 
 def main():
     parser = argparse.ArgumentParser(description='Extract and align the images from a rosbag')
-    parser.add_argument('-y', '--yaml-config', default='create_dataset_toni/config/config_align_images.yaml', help='Yaml file containing the configs')
+    parser.add_argument('-y', '--yaml-config', default='arss_scripts/configs/config_align_images.yaml', help='Yaml file containing the configs')
     parser.add_argument('-i', '--input-dir', default='tmp/processed/preprocessed', help='Input directory')
     parser.add_argument('-o', '--output-dir', default='tmp/processed', help='Output directory')
 
