@@ -83,7 +83,7 @@ class Preprocessor():
 
 def main():
     parser = argparse.ArgumentParser(description='Extract images from a rosbag and save them as pairs')
-    parser.add_argument('-y', '--yaml-config', default='create_dataset_toni/config/config_extract_images.yaml', help='Yaml file containing the configs')
+    parser.add_argument('-y', '--yaml-config', default='arss_scripts/image_alignment/configs/config_extract_images.yaml', help='Yaml file containing the configs')
     parser.add_argument('-p', '--pair-file', default='data/data_arss/datapairs_best.txt', help='Txt file with name of the pairs')
     parser.add_argument('-i', '--input-dir', default='/Users/antonia/dev/UNITN/remote_sensing_systems/data/ARSS_P3/', help='Input directory to hdf5 files')
     parser.add_argument('-o', '--output-dir', default='/Users/antonia/dev/UNITN/remote_sensing_systems/multipoint/tmp/processed', help='Output directory')

@@ -20,9 +20,9 @@ def synchronize():
 def main():
     parser = argparse.ArgumentParser(description='Predict the keypoints of an image')
     parser.add_argument('-y', '--yaml-config', default='configs/config_image_pair_dataset_prediction.yaml', help='YAML config file')
-    parser.add_argument('-m', '--model-dir', default='model_weights/multipoint', help='Directory of the model')
+    parser.add_argument('-m', '--model-dir', default='model_weights/multipoint-multispectral', help='Directory of the model')
     parser.add_argument('-v', '--version', default='latest', help='Model version (name of the param file), none for no weights')
-    parser.add_argument('-i', '--index', default=0, type=int, help='Index of the sample to predict and show')
+    parser.add_argument('-i', '--index', default=85, type=int, help='Index of the sample to predict and show')
     parser.add_argument('-r', '--radius', default=4, type=int, help='Radius of the keypoint circle')
     parser.add_argument('-p', dest='plot', action='store_true', help='If set the prediction the results are displayed')
     parser.add_argument('-e', dest='evaluation', action='store_true', help='If set the evaluation metrics are computed')

@@ -1,8 +1,13 @@
 import h5py
 from icecream import ic
 
-path_training = '/Users/antonia/dev/UNITN/remote_sensing_systems/arss_aerial_feature_matching/groundtruth_gui/data/training_del.hdf5'
-path_labels = '/Users/antonia/dev/UNITN/remote_sensing_systems/multipoint/tmp/labels.hdf5'
+##############
+# Deletes groups from training file that do not have corresponding groups in labels file
+# i.e. groups that do not have keypoints
+##############
+
+path_training = 'data/data_arss/training.hdf5'
+path_labels = 'data/data_arss/labels.hdf5'
 
 # Open both files
 with h5py.File(path_training, 'r+') as file1, h5py.File(path_labels, 'r') as file2:
